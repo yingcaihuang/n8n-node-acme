@@ -1,17 +1,17 @@
 # 发布说明
 
-## n8n-nodes-acme v1.1.0
+## n8n-nodes-acme v1.2.0
 
 ### 📦 包信息
 - **包名**: `n8n-nodes-acme`
-- **版本**: `1.1.0`
-- **大小**: 42.4 kB (压缩后)
-- **文件数**: 24个文件
+- **版本**: `1.2.0`
+- **大小**: 56.6 kB (压缩后)
+- **文件数**: 32个文件
 
 ### 🚀 功能特性
 - ✅ ACME证书自动颁发
 - ✅ DNS-01挑战验证
-- ✅ 支持4个主流DNS服务商：Dnspod、阿里云、Cloudflare、AWS Route 53
+- ✅ 支持6个主流DNS服务商：Dnspod、阿里云、Cloudflare、AWS Route 53、百度云、华为云
 - ✅ Let's Encrypt测试和生产环境
 - ✅ RSA和ECDSA密钥类型支持
 - ✅ 完整的错误处理和重试机制
@@ -36,6 +36,8 @@ npm install n8n-nodes-acme
 - **阿里云**: 需要Access Key ID和Access Key Secret
 - **Cloudflare**: 需要API Token和Zone ID
 - **AWS Route 53**: 需要Access Key ID、Secret Access Key和Hosted Zone ID
+- **百度云**: 需要Access Key ID、Secret Access Key和Region
+- **华为云**: 需要Access Key ID、Secret Access Key、Region和Project ID
 
 #### 系统要求
 - Node.js 18+
@@ -55,7 +57,7 @@ npm install n8n-nodes-acme
 3. **配置节点**
    - Domain: `example.com`
    - Email: `admin@example.com`
-   - DNS Provider: `dnspod`、`aliyun`、`cloudflare` 或 `route53`
+   - DNS Provider: `dnspod`、`aliyun`、`cloudflare`、`route53`、`baidu` 或 `huawei`
    - Use Staging: `true` (测试时)
 
 ### 🐛 已知问题

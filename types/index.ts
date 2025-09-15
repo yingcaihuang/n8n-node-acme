@@ -17,12 +17,23 @@ export interface AcmeCertificateCredentials {
     region: string;
     hostedZoneId: string;
   };
+  baiduApi?: {
+    accessKeyId: string;
+    secretAccessKey: string;
+    region: string;
+  };
+  huaweiApi?: {
+    accessKeyId: string;
+    secretAccessKey: string;
+    region: string;
+    projectId: string;
+  };
 }
 
 export interface AcmeCertificateOptions {
   domain: string;
   email: string;
-  dnsProvider: 'dnspod' | 'aliyun' | 'cloudflare' | 'route53';
+  dnsProvider: 'dnspod' | 'aliyun' | 'cloudflare' | 'route53' | 'baidu' | 'huawei';
   staging?: boolean;
   privateKeySize?: 2048 | 4096;
   keyType?: 'RSA' | 'EC';

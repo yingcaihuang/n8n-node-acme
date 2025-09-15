@@ -11,6 +11,8 @@ import { DnspodProvider } from '../../providers/DnspodProvider';
 import { AliyunProvider } from '../../providers/AliyunProvider';
 import { CloudflareProvider } from '../../providers/CloudflareProvider';
 import { Route53Provider } from '../../providers/Route53Provider';
+import { BaiduProvider } from '../../providers/BaiduProvider';
+import { HuaweiProvider } from '../../providers/HuaweiProvider';
 import { AcmeCertificateOptions } from '../../types';
 
 export class AcmeCertificate implements INodeType {
@@ -42,6 +44,14 @@ export class AcmeCertificate implements INodeType {
 			},
 			{
 				name: 'route53Api',
+				required: false,
+			},
+			{
+				name: 'baiduApi',
+				required: false,
+			},
+			{
+				name: 'huaweiApi',
 				required: false,
 			},
 		],
@@ -85,20 +95,28 @@ export class AcmeCertificate implements INodeType {
 				type: 'options',
 				options: [
 					{
-						name: 'Dnspod',
-						value: 'dnspod',
-					},
-					{
 						name: 'Aliyun',
 						value: 'aliyun',
+					},
+					{
+						name: 'AWS Route 53',
+						value: 'route53',
 					},
 					{
 						name: 'Cloudflare',
 						value: 'cloudflare',
 					},
 					{
-						name: 'AWS Route 53',
-						value: 'route53',
+						name: 'Dnspod',
+						value: 'dnspod',
+					},
+					{
+						name: '百度云',
+						value: 'baidu',
+					},
+					{
+						name: '华为云',
+						value: 'huawei',
 					},
 				],
 				default: 'dnspod',
@@ -220,6 +238,27 @@ export class AcmeCertificate implements INodeType {
 						credentials.region as string || 'us-east-1',
 						credentials.hostedZoneId as string
 					);
+				} else if (dnsProvider === 'baidu') {
+					const credentials = await this.getCredentials('baiduApi');
+					if (!credentials?.accessKeyId || !credentials?.secretAccessKey) {
+						throw new NodeOperationError(this.getNode(), '百度云API凭据未配置');
+					}
+					dnsProviderInstance = new BaiduProvider(
+						credentials.accessKeyId as string,
+						credentials.secretAccessKey as string,
+						credentials.region as string || 'bj'
+					);
+				} else if (dnsProvider === 'huawei') {
+					const credentials = await this.getCredentials('huaweiApi');
+					if (!credentials?.accessKeyId || !credentials?.secretAccessKey || !credentials?.projectId) {
+						throw new NodeOperationError(this.getNode(), '华为云API凭据未配置');
+					}
+					dnsProviderInstance = new HuaweiProvider(
+						credentials.accessKeyId as string,
+						credentials.secretAccessKey as string,
+						credentials.region as string || 'cn-north-1',
+						credentials.projectId as string
+					);
 				} else {
 					throw new NodeOperationError(this.getNode(), `不支持的DNS提供商: ${dnsProvider}`);
 				}
@@ -228,7 +267,7 @@ export class AcmeCertificate implements INodeType {
 				const options: AcmeCertificateOptions = {
 					domain,
 					email,
-					dnsProvider: dnsProvider as 'dnspod' | 'aliyun' | 'cloudflare' | 'route53',
+					dnsProvider: dnsProvider as 'dnspod' | 'aliyun' | 'cloudflare' | 'route53' | 'baidu' | 'huawei',
 					staging,
 					privateKeySize: privateKeySize as 2048 | 4096,
 					keyType: keyType as 'RSA' | 'EC',
