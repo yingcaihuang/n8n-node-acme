@@ -9,6 +9,8 @@ import {
 import { AcmeClient } from '../../core/AcmeClient';
 import { DnspodProvider } from '../../providers/DnspodProvider';
 import { AliyunProvider } from '../../providers/AliyunProvider';
+import { CloudflareProvider } from '../../providers/CloudflareProvider';
+import { Route53Provider } from '../../providers/Route53Provider';
 import { AcmeCertificateOptions } from '../../types';
 
 export class AcmeCertificate implements INodeType {
@@ -32,6 +34,14 @@ export class AcmeCertificate implements INodeType {
 			},
 			{
 				name: 'aliyunApi',
+				required: false,
+			},
+			{
+				name: 'cloudflareApi',
+				required: false,
+			},
+			{
+				name: 'route53Api',
 				required: false,
 			},
 		],
@@ -81,6 +91,14 @@ export class AcmeCertificate implements INodeType {
 					{
 						name: 'Aliyun',
 						value: 'aliyun',
+					},
+					{
+						name: 'Cloudflare',
+						value: 'cloudflare',
+					},
+					{
+						name: 'AWS Route 53',
+						value: 'route53',
 					},
 				],
 				default: 'dnspod',
@@ -185,6 +203,23 @@ export class AcmeCertificate implements INodeType {
 						throw new NodeOperationError(this.getNode(), '阿里云API凭据未配置');
 					}
 					dnsProviderInstance = new AliyunProvider(credentials.accessKeyId as string, credentials.accessKeySecret as string);
+				} else if (dnsProvider === 'cloudflare') {
+					const credentials = await this.getCredentials('cloudflareApi');
+					if (!credentials?.apiToken || !credentials?.zoneId) {
+						throw new NodeOperationError(this.getNode(), 'Cloudflare API凭据未配置');
+					}
+					dnsProviderInstance = new CloudflareProvider(credentials.apiToken as string, credentials.zoneId as string);
+				} else if (dnsProvider === 'route53') {
+					const credentials = await this.getCredentials('route53Api');
+					if (!credentials?.accessKeyId || !credentials?.secretAccessKey || !credentials?.hostedZoneId) {
+						throw new NodeOperationError(this.getNode(), 'AWS Route 53 API凭据未配置');
+					}
+					dnsProviderInstance = new Route53Provider(
+						credentials.accessKeyId as string,
+						credentials.secretAccessKey as string,
+						credentials.region as string || 'us-east-1',
+						credentials.hostedZoneId as string
+					);
 				} else {
 					throw new NodeOperationError(this.getNode(), `不支持的DNS提供商: ${dnsProvider}`);
 				}
@@ -193,7 +228,7 @@ export class AcmeCertificate implements INodeType {
 				const options: AcmeCertificateOptions = {
 					domain,
 					email,
-					dnsProvider: dnsProvider as 'dnspod' | 'aliyun',
+					dnsProvider: dnsProvider as 'dnspod' | 'aliyun' | 'cloudflare' | 'route53',
 					staging,
 					privateKeySize: privateKeySize as 2048 | 4096,
 					keyType: keyType as 'RSA' | 'EC',

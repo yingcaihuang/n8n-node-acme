@@ -6,7 +6,7 @@
 
 - 🔒 自动颁发SSL/TLS证书
 - 🌐 支持DNS-01挑战验证
-- 🏢 支持Dnspod和阿里云DNS服务商
+- 🏢 支持4个主流DNS服务商：Dnspod、阿里云、Cloudflare、AWS Route 53
 - 🧪 支持Let's Encrypt测试环境
 - 🔑 支持RSA和ECDSA密钥类型
 - 📊 返回完整的证书信息
@@ -37,13 +37,26 @@ npm install n8n-nodes-acme
 - 确保具有DNS管理权限
 - 在n8n凭据中添加阿里云API凭据
 
+#### Cloudflare配置
+- 转到Cloudflare控制台
+- 创建API Token，权限包括：Zone:Read, DNS:Edit
+- 获取Zone ID
+- 在n8n凭据中添加Cloudflare API凭据
+
+#### AWS Route 53配置
+- 转到AWS控制台
+- 创建IAM用户，权限包括：Route53ChangeResourceRecordSets
+- 获取Access Key ID和Secret Access Key
+- 获取Hosted Zone ID
+- 在n8n凭据中添加AWS Route 53 API凭据
+
 ### 2. 使用ACME证书节点
 
 1. 在n8n工作流中添加"ACME Certificate"节点
 2. 配置以下参数：
    - **Domain**: 要申请证书的域名
    - **Email**: 用于ACME账户注册的邮箱
-   - **DNS Provider**: 选择Dnspod或阿里云
+   - **DNS Provider**: 选择Dnspod、阿里云、Cloudflare或AWS Route 53
    - **Use Staging Environment**: 是否使用测试环境（建议先测试）
    - **Private Key Size**: 私钥长度（2048或4096位）
    - **Key Type**: 密钥类型（RSA或ECDSA）
@@ -83,6 +96,16 @@ npm install n8n-nodes-acme
 - 官方网站：https://www.aliyun.com/
 - API文档：https://help.aliyun.com/document_detail/29739.html
 - 需要：Access Key ID 和 Access Key Secret
+
+### Cloudflare
+- 官方网站：https://www.cloudflare.com/
+- API文档：https://developers.cloudflare.com/api/
+- 需要：API Token 和 Zone ID
+
+### AWS Route 53
+- 官方网站：https://aws.amazon.com/route53/
+- API文档：https://docs.aws.amazon.com/Route53/latest/APIReference/
+- 需要：Access Key ID、Secret Access Key 和 Hosted Zone ID
 
 ## 注意事项
 

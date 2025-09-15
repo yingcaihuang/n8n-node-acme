@@ -7,12 +7,22 @@ export interface AcmeCertificateCredentials {
     accessKeyId: string;
     accessKeySecret: string;
   };
+  cloudflareApi?: {
+    apiToken: string;
+    zoneId: string;
+  };
+  route53Api?: {
+    accessKeyId: string;
+    secretAccessKey: string;
+    region: string;
+    hostedZoneId: string;
+  };
 }
 
 export interface AcmeCertificateOptions {
   domain: string;
   email: string;
-  dnsProvider: 'dnspod' | 'aliyun';
+  dnsProvider: 'dnspod' | 'aliyun' | 'cloudflare' | 'route53';
   staging?: boolean;
   privateKeySize?: 2048 | 4096;
   keyType?: 'RSA' | 'EC';

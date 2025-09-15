@@ -4,7 +4,7 @@
 
 ### 📝 分享内容
 
-**标题**: 🆕 ACME证书自动颁发节点 - 支持Dnspod和阿里云DNS验证
+**标题**: 🆕 ACME证书自动颁发节点 - 支持4个主流DNS服务商验证
 
 **内容**:
 ```
@@ -13,13 +13,15 @@
 🔑 **主要功能**:
 - 自动颁发Let's Encrypt证书
 - 支持DNS-01挑战验证
-- 支持Dnspod和阿里云DNS服务商
+- 支持4个主流DNS服务商
 - 支持测试和生产环境
 - 完整的错误处理和重试机制
 
 🌐 **支持的DNS提供商**:
 - Dnspod (腾讯云)
 - 阿里云DNS
+- Cloudflare
+- AWS Route 53
 
 ⚡ **使用场景**:
 - 自动化SSL证书管理
@@ -35,7 +37,7 @@
 🔧 **配置示例**:
 - Domain: example.com
 - Email: admin@example.com
-- DNS Provider: dnspod/aliyun
+- DNS Provider: dnspod/aliyun/cloudflare/route53
 - Use Staging: true (测试时)
 
 📚 **文档**: https://github.com/your-username/n8n-node-acme

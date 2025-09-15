@@ -5,6 +5,20 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
 并且此项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.1.0] - 2024-01-01
+
+### 新增
+- 支持Cloudflare DNS提供商
+- 支持AWS Route 53 DNS提供商
+- 新增Cloudflare API凭据配置
+- 新增AWS Route 53 API凭据配置
+- 扩展DNS提供商选择到4个选项
+
+### 功能增强
+- 更广泛的DNS服务商支持
+- 更好的国际化支持
+- 改进的错误处理
+
 ## [1.0.1] - 2024-01-01
 
 ### 修复
