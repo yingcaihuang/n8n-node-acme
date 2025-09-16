@@ -10,6 +10,7 @@
 - 🧪 支持Let's Encrypt测试环境
 - 🔑 支持RSA和ECDSA密钥类型
 - 📊 返回完整的证书信息
+- 🎨 优化的用户界面，动态显示凭证配置
 
 ## 安装
 
@@ -68,9 +69,10 @@ npm install n8n-nodes-acme
 
 1. 在n8n工作流中添加"ACME Certificate"节点
 2. 配置以下参数：
+   - **DNS Provider**: 首先选择DNS服务商（Dnspod、阿里云、Cloudflare、AWS Route 53、百度云或华为云）
+   - **Credential to connect with**: 选择对应的API凭据（根据DNS Provider动态显示）
    - **Domain**: 要申请证书的域名
    - **Email**: 用于ACME账户注册的邮箱
-   - **DNS Provider**: 选择Dnspod、阿里云、Cloudflare、AWS Route 53、百度云或华为云
    - **Use Staging Environment**: 是否使用测试环境（建议先测试）
    - **Private Key Size**: 私钥长度（2048或4096位）
    - **Key Type**: 密钥类型（RSA或ECDSA）

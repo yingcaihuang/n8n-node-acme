@@ -72,24 +72,6 @@ export class AcmeCertificate implements INodeType {
 				default: 'issue',
 			},
 			{
-				displayName: 'Domain',
-				name: 'domain',
-				type: 'string',
-				default: '',
-				placeholder: 'example.com',
-				description: 'The domain name for the certificate',
-				required: true,
-			},
-			{
-				displayName: 'Email',
-				name: 'email',
-				type: 'string',
-				default: '',
-				placeholder: 'admin@example.com',
-				description: 'Email address for ACME account registration',
-				required: true,
-			},
-			{
 				displayName: 'DNS Provider',
 				name: 'dnsProvider',
 				type: 'options',
@@ -121,6 +103,120 @@ export class AcmeCertificate implements INodeType {
 				],
 				default: 'dnspod',
 				description: 'DNS provider for domain validation',
+				required: true,
+			},
+			{
+				displayName: 'Credential to connect with',
+				name: 'credentialType',
+				type: 'credentialsSelect',
+				typeOptions: {
+					filter: 'dnspodApi' as any,
+					showAllCredentials: false,
+				},
+				default: '',
+				description: 'Dnspod API credentials',
+				displayOptions: {
+					show: {
+						dnsProvider: ['dnspod'],
+					},
+				},
+			},
+			{
+				displayName: 'Credential to connect with',
+				name: 'credentialType',
+				type: 'credentialsSelect',
+				typeOptions: {
+					filter: 'aliyunApi' as any,
+					showAllCredentials: false,
+				},
+				default: '',
+				description: 'Aliyun API credentials',
+				displayOptions: {
+					show: {
+						dnsProvider: ['aliyun'],
+					},
+				},
+			},
+			{
+				displayName: 'Credential to connect with',
+				name: 'credentialType',
+				type: 'credentialsSelect',
+				typeOptions: {
+					filter: 'cloudflareApi' as any,
+					showAllCredentials: false,
+				},
+				default: '',
+				description: 'Cloudflare API credentials',
+				displayOptions: {
+					show: {
+						dnsProvider: ['cloudflare'],
+					},
+				},
+			},
+			{
+				displayName: 'Credential to connect with',
+				name: 'credentialType',
+				type: 'credentialsSelect',
+				typeOptions: {
+					filter: 'route53Api' as any,
+					showAllCredentials: false,
+				},
+				default: '',
+				description: 'AWS Route 53 API credentials',
+				displayOptions: {
+					show: {
+						dnsProvider: ['route53'],
+					},
+				},
+			},
+			{
+				displayName: 'Credential to connect with',
+				name: 'credentialType',
+				type: 'credentialsSelect',
+				typeOptions: {
+					filter: 'baiduApi' as any,
+					showAllCredentials: false,
+				},
+				default: '',
+				description: 'Baidu Cloud API credentials',
+				displayOptions: {
+					show: {
+						dnsProvider: ['baidu'],
+					},
+				},
+			},
+			{
+				displayName: 'Credential to connect with',
+				name: 'credentialType',
+				type: 'credentialsSelect',
+				typeOptions: {
+					filter: 'huaweiApi' as any,
+					showAllCredentials: false,
+				},
+				default: '',
+				description: 'Huawei Cloud API credentials',
+				displayOptions: {
+					show: {
+						dnsProvider: ['huawei'],
+					},
+				},
+			},
+			{
+				displayName: 'Domain',
+				name: 'domain',
+				type: 'string',
+				default: '',
+				placeholder: 'example.com',
+				description: 'The domain name for the certificate',
+				required: true,
+			},
+			{
+				displayName: 'Email',
+				name: 'email',
+				type: 'string',
+				default: '',
+				placeholder: 'admin@example.com',
+				description: 'Email address for ACME account registration',
 				required: true,
 			},
 			{
@@ -207,28 +303,30 @@ export class AcmeCertificate implements INodeType {
 				const keyType = this.getNodeParameter('keyType', i) as string;
 				const ecCurve = this.getNodeParameter('ecCurve', i) as string;
 
-				// 验证DNS提供商凭据
+				// 根据DNS提供商获取对应的凭据
 				let dnsProviderInstance;
+				let credentials;
+				
 				if (dnsProvider === 'dnspod') {
-					const credentials = await this.getCredentials('dnspodApi');
+					credentials = await this.getCredentials('dnspodApi');
 					if (!credentials?.apiId || !credentials?.apiToken) {
 						throw new NodeOperationError(this.getNode(), 'Dnspod API凭据未配置');
 					}
 					dnsProviderInstance = new DnspodProvider(credentials.apiId as string, credentials.apiToken as string);
 				} else if (dnsProvider === 'aliyun') {
-					const credentials = await this.getCredentials('aliyunApi');
+					credentials = await this.getCredentials('aliyunApi');
 					if (!credentials?.accessKeyId || !credentials?.accessKeySecret) {
 						throw new NodeOperationError(this.getNode(), '阿里云API凭据未配置');
 					}
 					dnsProviderInstance = new AliyunProvider(credentials.accessKeyId as string, credentials.accessKeySecret as string);
 				} else if (dnsProvider === 'cloudflare') {
-					const credentials = await this.getCredentials('cloudflareApi');
+					credentials = await this.getCredentials('cloudflareApi');
 					if (!credentials?.apiToken || !credentials?.zoneId) {
 						throw new NodeOperationError(this.getNode(), 'Cloudflare API凭据未配置');
 					}
 					dnsProviderInstance = new CloudflareProvider(credentials.apiToken as string, credentials.zoneId as string);
 				} else if (dnsProvider === 'route53') {
-					const credentials = await this.getCredentials('route53Api');
+					credentials = await this.getCredentials('route53Api');
 					if (!credentials?.accessKeyId || !credentials?.secretAccessKey || !credentials?.hostedZoneId) {
 						throw new NodeOperationError(this.getNode(), 'AWS Route 53 API凭据未配置');
 					}
@@ -239,7 +337,7 @@ export class AcmeCertificate implements INodeType {
 						credentials.hostedZoneId as string
 					);
 				} else if (dnsProvider === 'baidu') {
-					const credentials = await this.getCredentials('baiduApi');
+					credentials = await this.getCredentials('baiduApi');
 					if (!credentials?.accessKeyId || !credentials?.secretAccessKey) {
 						throw new NodeOperationError(this.getNode(), '百度云API凭据未配置');
 					}
@@ -249,7 +347,7 @@ export class AcmeCertificate implements INodeType {
 						credentials.region as string || 'bj'
 					);
 				} else if (dnsProvider === 'huawei') {
-					const credentials = await this.getCredentials('huaweiApi');
+					credentials = await this.getCredentials('huaweiApi');
 					if (!credentials?.accessKeyId || !credentials?.secretAccessKey || !credentials?.projectId) {
 						throw new NodeOperationError(this.getNode(), '华为云API凭据未配置');
 					}
