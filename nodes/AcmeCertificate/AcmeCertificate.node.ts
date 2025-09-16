@@ -107,7 +107,7 @@ export class AcmeCertificate implements INodeType {
 			},
 			{
 				displayName: 'Credential to Connect With',
-				name: 'credentialType',
+				name: 'dnspodCredential',
 				type: 'credentialsSelect',
 				typeOptions: {
 					filter: 'dnspodApi' as any,
@@ -123,7 +123,7 @@ export class AcmeCertificate implements INodeType {
 			},
 			{
 				displayName: 'Credential to Connect With',
-				name: 'credentialType',
+				name: 'aliyunCredential',
 				type: 'credentialsSelect',
 				typeOptions: {
 					filter: 'aliyunApi' as any,
@@ -139,7 +139,7 @@ export class AcmeCertificate implements INodeType {
 			},
 			{
 				displayName: 'Credential to Connect With',
-				name: 'credentialType',
+				name: 'cloudflareCredential',
 				type: 'credentialsSelect',
 				typeOptions: {
 					filter: 'cloudflareApi' as any,
@@ -155,7 +155,7 @@ export class AcmeCertificate implements INodeType {
 			},
 			{
 				displayName: 'Credential to Connect With',
-				name: 'credentialType',
+				name: 'route53Credential',
 				type: 'credentialsSelect',
 				typeOptions: {
 					filter: 'route53Api' as any,
@@ -171,7 +171,7 @@ export class AcmeCertificate implements INodeType {
 			},
 			{
 				displayName: 'Credential to Connect With',
-				name: 'credentialType',
+				name: 'baiduCredential',
 				type: 'credentialsSelect',
 				typeOptions: {
 					filter: 'baiduApi' as any,
@@ -187,7 +187,7 @@ export class AcmeCertificate implements INodeType {
 			},
 			{
 				displayName: 'Credential to Connect With',
-				name: 'credentialType',
+				name: 'huaweiCredential',
 				type: 'credentialsSelect',
 				typeOptions: {
 					filter: 'huaweiApi' as any,
