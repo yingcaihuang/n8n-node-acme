@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-acme",
-	"version": "1.4.4",
+	"version": "1.5.1",
   "description": "n8n node for ACME certificate issuance with DNS validation support",
   "keywords": [
     "n8n-community-node-package",
@@ -36,20 +36,15 @@
   "files": [
     "dist"
   ],
-  "n8n": {
-    "n8nNodesApiVersion": 1,
+	"n8n": {
+		"n8nNodesApiVersion": 1,
 		"credentials": [
-			"dist/credentials/DnspodApi.credentials.js",
-			"dist/credentials/AliyunApi.credentials.js",
-			"dist/credentials/CloudflareApi.credentials.js",
-			"dist/credentials/Route53Api.credentials.js",
-			"dist/credentials/BaiduApi.credentials.js",
-			"dist/credentials/HuaweiApi.credentials.js"
+			"dist/credentials/DnspodApi.credentials.js"
 		],
-    "nodes": [
-      "dist/nodes/AcmeCertificate/AcmeCertificate.node.js"
-    ]
-  },
+		"nodes": [
+			"dist/nodes/AcmeCertificate/AcmeCertificate.node.js"
+		]
+	},
   "devDependencies": {
     "@types/node": "^18.16.17",
     "@typescript-eslint/parser": "^5.59.9",
