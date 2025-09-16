@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-acme",
-	"version": "1.4.2",
+	"version": "1.4.3",
   "description": "n8n node for ACME certificate issuance with DNS validation support",
   "keywords": [
     "n8n-community-node-package",

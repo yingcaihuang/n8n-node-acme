@@ -5,6 +5,12 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
 并且此项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.4.3] - 2025-01-16
+
+### 修复
+- 修复npm发布版本冲突问题
+- 更新版本号以解决重复发布错误
+
 ## [1.4.2] - 2024-01-01
 
 ### 修复
