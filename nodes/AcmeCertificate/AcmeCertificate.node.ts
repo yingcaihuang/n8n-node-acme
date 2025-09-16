@@ -33,26 +33,56 @@ export class AcmeCertificate implements INodeType {
 			{
 				name: 'dnspodApi',
 				required: false,
+				displayOptions: {
+					show: {
+						dnsProvider: ['dnspod'],
+					},
+				},
 			},
 			{
 				name: 'aliyunApi',
 				required: false,
+				displayOptions: {
+					show: {
+						dnsProvider: ['aliyun'],
+					},
+				},
 			},
 			{
 				name: 'cloudflareApi',
 				required: false,
+				displayOptions: {
+					show: {
+						dnsProvider: ['cloudflare'],
+					},
+				},
 			},
 			{
 				name: 'route53Api',
 				required: false,
+				displayOptions: {
+					show: {
+						dnsProvider: ['route53'],
+					},
+				},
 			},
 			{
 				name: 'baiduApi',
 				required: false,
+				displayOptions: {
+					show: {
+						dnsProvider: ['baidu'],
+					},
+				},
 			},
 			{
 				name: 'huaweiApi',
 				required: false,
+				displayOptions: {
+					show: {
+						dnsProvider: ['huawei'],
+					},
+				},
 			},
 		],
 		properties: [
@@ -104,102 +134,6 @@ export class AcmeCertificate implements INodeType {
 				default: 'dnspod',
 				description: 'DNS provider for domain validation',
 				required: true,
-			},
-			{
-				displayName: 'Credential to Connect With',
-				name: 'dnspodCredential',
-				type: 'credentialsSelect',
-				typeOptions: {
-					filter: 'dnspodApi' as any,
-					showAllCredentials: false,
-				},
-				default: '',
-				description: 'Dnspod API credentials',
-				displayOptions: {
-					show: {
-						dnsProvider: ['dnspod'],
-					},
-				},
-			},
-			{
-				displayName: 'Credential to Connect With',
-				name: 'aliyunCredential',
-				type: 'credentialsSelect',
-				typeOptions: {
-					filter: 'aliyunApi' as any,
-					showAllCredentials: false,
-				},
-				default: '',
-				description: 'Aliyun API credentials',
-				displayOptions: {
-					show: {
-						dnsProvider: ['aliyun'],
-					},
-				},
-			},
-			{
-				displayName: 'Credential to Connect With',
-				name: 'cloudflareCredential',
-				type: 'credentialsSelect',
-				typeOptions: {
-					filter: 'cloudflareApi' as any,
-					showAllCredentials: false,
-				},
-				default: '',
-				description: 'Cloudflare API credentials',
-				displayOptions: {
-					show: {
-						dnsProvider: ['cloudflare'],
-					},
-				},
-			},
-			{
-				displayName: 'Credential to Connect With',
-				name: 'route53Credential',
-				type: 'credentialsSelect',
-				typeOptions: {
-					filter: 'route53Api' as any,
-					showAllCredentials: false,
-				},
-				default: '',
-				description: 'AWS Route 53 API credentials',
-				displayOptions: {
-					show: {
-						dnsProvider: ['route53'],
-					},
-				},
-			},
-			{
-				displayName: 'Credential to Connect With',
-				name: 'baiduCredential',
-				type: 'credentialsSelect',
-				typeOptions: {
-					filter: 'baiduApi' as any,
-					showAllCredentials: false,
-				},
-				default: '',
-				description: 'Baidu Cloud API credentials',
-				displayOptions: {
-					show: {
-						dnsProvider: ['baidu'],
-					},
-				},
-			},
-			{
-				displayName: 'Credential to Connect With',
-				name: 'huaweiCredential',
-				type: 'credentialsSelect',
-				typeOptions: {
-					filter: 'huaweiApi' as any,
-					showAllCredentials: false,
-				},
-				default: '',
-				description: 'Huawei Cloud API credentials',
-				displayOptions: {
-					show: {
-						dnsProvider: ['huawei'],
-					},
-				},
 			},
 			{
 				displayName: 'Domain',
