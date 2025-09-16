@@ -95,6 +95,14 @@ export class AcmeCertificate implements INodeType {
 				type: 'options',
 				options: [
 					{
+						name: '百度云',
+						value: 'baidu',
+					},
+					{
+						name: '华为云',
+						value: 'huawei',
+					},
+					{
 						name: 'Aliyun',
 						value: 'aliyun',
 					},
@@ -109,14 +117,6 @@ export class AcmeCertificate implements INodeType {
 					{
 						name: 'Dnspod',
 						value: 'dnspod',
-					},
-					{
-						name: '百度云',
-						value: 'baidu',
-					},
-					{
-						name: '华为云',
-						value: 'huawei',
 					},
 				],
 				default: 'dnspod',
