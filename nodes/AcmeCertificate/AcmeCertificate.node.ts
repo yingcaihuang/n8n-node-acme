@@ -106,7 +106,7 @@ export class AcmeCertificate implements INodeType {
 				required: true,
 			},
 			{
-				displayName: 'Credential to connect with',
+				displayName: 'Credential to Connect With',
 				name: 'credentialType',
 				type: 'credentialsSelect',
 				typeOptions: {
@@ -122,7 +122,7 @@ export class AcmeCertificate implements INodeType {
 				},
 			},
 			{
-				displayName: 'Credential to connect with',
+				displayName: 'Credential to Connect With',
 				name: 'credentialType',
 				type: 'credentialsSelect',
 				typeOptions: {
@@ -138,7 +138,7 @@ export class AcmeCertificate implements INodeType {
 				},
 			},
 			{
-				displayName: 'Credential to connect with',
+				displayName: 'Credential to Connect With',
 				name: 'credentialType',
 				type: 'credentialsSelect',
 				typeOptions: {
@@ -154,7 +154,7 @@ export class AcmeCertificate implements INodeType {
 				},
 			},
 			{
-				displayName: 'Credential to connect with',
+				displayName: 'Credential to Connect With',
 				name: 'credentialType',
 				type: 'credentialsSelect',
 				typeOptions: {
@@ -170,7 +170,7 @@ export class AcmeCertificate implements INodeType {
 				},
 			},
 			{
-				displayName: 'Credential to connect with',
+				displayName: 'Credential to Connect With',
 				name: 'credentialType',
 				type: 'credentialsSelect',
 				typeOptions: {
@@ -186,7 +186,7 @@ export class AcmeCertificate implements INodeType {
 				},
 			},
 			{
-				displayName: 'Credential to connect with',
+				displayName: 'Credential to Connect With',
 				name: 'credentialType',
 				type: 'credentialsSelect',
 				typeOptions: {
