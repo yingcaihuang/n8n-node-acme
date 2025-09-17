@@ -35,14 +35,6 @@ export class AliyunDnsApi implements ICredentialType {
 			type: 'options',
 			options: [
 				{
-					name: '华东1（杭州）',
-					value: 'cn-hangzhou',
-				},
-				{
-					name: '华东2（上海）',
-					value: 'cn-shanghai',
-				},
-				{
 					name: '华北1（青岛）',
 					value: 'cn-qingdao',
 				},
@@ -59,6 +51,14 @@ export class AliyunDnsApi implements ICredentialType {
 					value: 'cn-huhehaote',
 				},
 				{
+					name: '华东1（杭州）',
+					value: 'cn-hangzhou',
+				},
+				{
+					name: '华东2（上海）',
+					value: 'cn-shanghai',
+				},
+				{
 					name: '华南1（深圳）',
 					value: 'cn-shenzhen',
 				},
@@ -71,20 +71,32 @@ export class AliyunDnsApi implements ICredentialType {
 					value: 'cn-guangzhou',
 				},
 				{
-					name: '西南1（成都）',
-					value: 'cn-chengdu',
-				},
-				{
-					name: '中国（香港）',
-					value: 'cn-hongkong',
+					name: '美国（弗吉尼亚）',
+					value: 'us-east-1',
 				},
 				{
 					name: '美国（硅谷）',
 					value: 'us-west-1',
 				},
 				{
-					name: '美国（弗吉尼亚）',
-					value: 'us-east-1',
+					name: '欧洲西部1（英国）',
+					value: 'eu-west-1',
+				},
+				{
+					name: '欧洲中部1（法兰克福）',
+					value: 'eu-central-1',
+				},
+				{
+					name: '西南1（成都）',
+					value: 'cn-chengdu',
+				},
+				{
+					name: '亚太东北1（日本）',
+					value: 'ap-northeast-1',
+				},
+				{
+					name: '亚太东北2（首尔）',
+					value: 'ap-northeast-2',
 				},
 				{
 					name: '亚太东南1（新加坡）',
@@ -115,24 +127,12 @@ export class AliyunDnsApi implements ICredentialType {
 					value: 'ap-south-1',
 				},
 				{
-					name: '亚太东北1（日本）',
-					value: 'ap-northeast-1',
-				},
-				{
-					name: '亚太东北2（首尔）',
-					value: 'ap-northeast-2',
-				},
-				{
-					name: '欧洲中部1（法兰克福）',
-					value: 'eu-central-1',
-				},
-				{
-					name: '欧洲西部1（英国）',
-					value: 'eu-west-1',
-				},
-				{
 					name: '中东东部1（迪拜）',
 					value: 'me-east-1',
+				},
+				{
+					name: '中国（香港）',
+					value: 'cn-hongkong',
 				},
 			],
 			default: 'cn-hangzhou',
