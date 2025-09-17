@@ -5,9 +5,9 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
-export class DnspodApi implements ICredentialType {
-	name = 'dnspodApi';
-	displayName = 'Dnspod API';
+export class DnspodDnsApi implements ICredentialType {
+	name = 'dnspodDnsApi';
+	displayName = 'Dnspod DNS API';
 	documentationUrl = 'https://docs.dnspod.cn/api/';
 	properties: INodeProperties[] = [
 		{
@@ -22,33 +22,52 @@ export class DnspodApi implements ICredentialType {
 			displayName: 'API Token',
 			name: 'apiToken',
 			type: 'string',
-			typeOptions: { password: true },
+			typeOptions: {
+				password: true,
+			},
 			default: '',
 			required: true,
 			description: 'Dnspod API Token',
+		},
+		{
+			displayName: 'API Endpoint',
+			name: 'apiEndpoint',
+			type: 'options',
+			options: [
+				{
+					name: 'Dnspod.cn (中国)',
+					value: 'https://dnsapi.cn',
+				},
+				{
+					name: 'Dnspod.com (国际)',
+					value: 'https://dnsapi.com',
+				},
+			],
+			default: 'https://dnsapi.cn',
+			required: true,
+			description: 'Dnspod API端点',
 		},
 	];
 
 	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
-		properties: {
-			headers: {
-				'User-Agent': 'n8n-node-acme/1.0.0',
-				'Content-Type': 'application/x-www-form-urlencoded',
-			},
-		},
+		properties: {},
 	};
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'https://dnsapi.cn',
+			baseURL: '={{$credentials.apiEndpoint}}',
 			url: '/User.Detail',
 			method: 'POST',
 			headers: {
-				'User-Agent': 'n8n-node-acme/1.0.0',
 				'Content-Type': 'application/x-www-form-urlencoded',
 			},
-			body: 'login_email={{$credentials.email}}&login_password={{$credentials.password}}&format=json',
+			body: {
+				login_token: '={{$credentials.apiId}},{{$credentials.apiToken}}',
+				format: 'json',
+			},
 		},
 	};
 }
+
+

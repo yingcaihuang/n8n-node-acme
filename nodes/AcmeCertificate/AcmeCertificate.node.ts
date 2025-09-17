@@ -7,7 +7,8 @@ import {
 } from 'n8n-workflow';
 
 import { AcmeClient } from '../../core/AcmeClient';
-import { DnspodProvider } from '../../providers/DnspodProvider';
+import { AliyunDnsProvider } from '../../providers/AliyunDnsProvider';
+import { DnspodDnsProvider } from '../../providers/DnspodDnsProvider';
 import { AcmeCertificateOptions } from '../../types';
 
 export class AcmeCertificate implements INodeType {
@@ -26,8 +27,12 @@ export class AcmeCertificate implements INodeType {
 		outputs: ['main'] as any,
 		credentials: [
 			{
-				name: 'dnspodApi',
-				required: true,
+				name: 'aliyunDnsApi',
+				required: false,
+			},
+			{
+				name: 'dnspodDnsApi',
+				required: false,
 			},
 		],
 		properties: [
@@ -52,22 +57,43 @@ export class AcmeCertificate implements INodeType {
 				type: 'options',
 				options: [
 					{
-						name: 'Dnspod',
+						name: '阿里云DNS',
+						value: 'aliyun',
+					},
+					{
+						name: 'Dnspod DNS',
 						value: 'dnspod',
 					},
 				],
-				default: 'dnspod',
+				default: 'aliyun',
 				description: 'DNS provider for domain validation',
 				required: true,
 			},
 			{
 				displayName: 'Credential to Connect With',
+				name: 'aliyunCredential',
+				type: 'credentialsSelect',
+				credentialTypes: ['aliyunDnsApi'] as any,
+				default: '',
+				description: '阿里云DNS API凭证',
+				displayOptions: {
+					show: {
+						dnsProvider: ['aliyun'],
+					},
+				},
+			},
+			{
+				displayName: 'Credential to Connect With',
 				name: 'dnspodCredential',
 				type: 'credentialsSelect',
-				credentialTypes: ['dnspodApi'] as any,
+				credentialTypes: ['dnspodDnsApi'] as any,
 				default: '',
-				description: 'Dnspod API credentials',
-				required: true,
+				description: 'Dnspod DNS API凭证',
+				displayOptions: {
+					show: {
+						dnsProvider: ['dnspod'],
+					},
+				},
 			},
 			{
 				displayName: 'Domain',
@@ -171,18 +197,38 @@ export class AcmeCertificate implements INodeType {
 				const keyType = this.getNodeParameter('keyType', i) as string;
 				const ecCurve = this.getNodeParameter('ecCurve', i) as string;
 
-				// 获取Dnspod凭据
-				const credentials = await this.getCredentials('dnspodApi', i);
-				if (!credentials?.apiId || !credentials?.apiToken) {
-					throw new NodeOperationError(this.getNode(), 'Dnspod API凭据未配置');
+				// 根据DNS提供商获取对应的凭据和Provider实例
+				let dnsProviderInstance;
+				
+				if (dnsProvider === 'aliyun') {
+					const credentials = await this.getCredentials('aliyunDnsApi', i);
+					if (!credentials?.accessKeyId || !credentials?.accessKeySecret || !credentials?.region) {
+						throw new NodeOperationError(this.getNode(), '阿里云DNS API凭据未配置');
+					}
+					dnsProviderInstance = new AliyunDnsProvider({
+						accessKeyId: credentials.accessKeyId as string,
+						accessKeySecret: credentials.accessKeySecret as string,
+						region: credentials.region as string,
+					});
+				} else if (dnsProvider === 'dnspod') {
+					const credentials = await this.getCredentials('dnspodDnsApi', i);
+					if (!credentials?.apiId || !credentials?.apiToken || !credentials?.apiEndpoint) {
+						throw new NodeOperationError(this.getNode(), 'Dnspod DNS API凭据未配置');
+					}
+					dnsProviderInstance = new DnspodDnsProvider({
+						apiId: credentials.apiId as string,
+						apiToken: credentials.apiToken as string,
+						apiEndpoint: credentials.apiEndpoint as string,
+					});
+				} else {
+					throw new NodeOperationError(this.getNode(), `不支持的DNS提供商: ${dnsProvider}`);
 				}
-				const dnsProviderInstance = new DnspodProvider(credentials.apiId as string, credentials.apiToken as string);
 
 				// 创建ACME客户端选项
 				const options: AcmeCertificateOptions = {
 					domain,
 					email,
-					dnsProvider: 'dnspod',
+					dnsProvider: dnsProvider as 'aliyun' | 'dnspod',
 					staging,
 					privateKeySize: privateKeySize as 2048 | 4096,
 					keyType: keyType as 'RSA' | 'EC',

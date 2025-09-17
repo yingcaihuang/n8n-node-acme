@@ -48,8 +48,9 @@ export interface DnsRecord {
 }
 
 export interface DnsProvider {
-  addTxtRecord(domain: string, name: string, value: string): Promise<void>;
-  removeTxtRecord(domain: string, name: string, value: string): Promise<void>;
+  addTxtRecord(domain: string, name: string, value: string): Promise<string | void>;
+  removeTxtRecord(domain: string, recordId: string): Promise<void>;
+  waitForDnsPropagation(domain: string, name: string, value: string, timeout?: number): Promise<void>;
 }
 
 export interface CertificateResult {

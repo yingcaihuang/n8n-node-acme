@@ -121,9 +121,11 @@ export class AcmeClient {
 
     // 添加DNS记录
     const dnsRecordName = `_acme-challenge.${authz.identifier.value}`;
+    let recordId: string | undefined;
     
     try {
-      await this.dnsProvider.addTxtRecord(authz.identifier.value, dnsRecordName, dnsRecordValue);
+      const result = await this.dnsProvider.addTxtRecord(authz.identifier.value, dnsRecordName, dnsRecordValue);
+      recordId = typeof result === 'string' ? result : undefined;
 
       // 等待DNS传播
       await this.waitForDnsPropagation(dnsRecordName, dnsRecordValue);
@@ -136,11 +138,13 @@ export class AcmeClient {
 
     } finally {
       // 清理DNS记录
-      try {
-        await this.dnsProvider.removeTxtRecord(authz.identifier.value, dnsRecordName, dnsRecordValue);
-      } catch (cleanupError) {
-        const cleanupErrorMessage = cleanupError instanceof Error ? cleanupError.message : String(cleanupError);
-        console.warn('DNS记录清理失败:', cleanupErrorMessage);
+      if (recordId) {
+        try {
+          await this.dnsProvider.removeTxtRecord(authz.identifier.value, recordId);
+        } catch (cleanupError) {
+          const cleanupErrorMessage = cleanupError instanceof Error ? cleanupError.message : String(cleanupError);
+          console.warn('DNS记录清理失败:', cleanupErrorMessage);
+        }
       }
     }
   }

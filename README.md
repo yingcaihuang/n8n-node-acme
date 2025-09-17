@@ -6,11 +6,11 @@
 
 - 🔒 自动颁发SSL/TLS证书
 - 🌐 支持DNS-01挑战验证
-- 🏢 支持Dnspod DNS服务商
+- 🏢 支持阿里云DNS和Dnspod DNS服务商
 - 🧪 支持Let's Encrypt测试环境
 - 🔑 支持RSA和ECDSA密钥类型
 - 📊 返回完整的证书信息
-- 🎨 简化的用户界面，专注于Dnspod配置
+- 🎨 动态凭证选择，根据DNS提供商显示对应配置
 - 🎯 现代化SVG图标设计，美观易识别
 
 ## 安装
